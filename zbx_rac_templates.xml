@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-09-24T13:08:22Z</date>
+    <date>2021-10-04T15:03:00Z</date>
     <groups>
         <group>
             <name>Templates/1C</name>
@@ -218,6 +218,93 @@
                             </master_item>
                         </item_prototype>
                         <item_prototype>
+                            <name>{#NAME}:db-name</name>
+                            <type>DEPENDENT</type>
+                            <key>db-name_[&quot;{#NAME}&quot;]</key>
+                            <delay>0</delay>
+                            <history>{$HISTORY_STORAGE}</history>
+                            <trends>0</trends>
+                            <value_type>CHAR</value_type>
+                            <applications>
+                                <application>
+                                    <name>Cluster_1C_info</name>
+                                </application>
+                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>Cluster_1C_info_{#NAME}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$.[&quot;db-name&quot;]</params>
+                                    <error_handler>DISCARD_VALUE</error_handler>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>zbx_rac.py[&quot;info&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}, &quot;-db-id&quot;, {#INFOBASE}, &quot;-db-user&quot;, {$1C_DB_USER},&quot;-db-pwd&quot;, {$1C_DB_PWD} ]</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>{#NAME}:db-server</name>
+                            <type>DEPENDENT</type>
+                            <key>db-server_[&quot;{#NAME}&quot;]</key>
+                            <delay>0</delay>
+                            <history>{$HISTORY_STORAGE}</history>
+                            <trends>0</trends>
+                            <value_type>CHAR</value_type>
+                            <applications>
+                                <application>
+                                    <name>Cluster_1C_info</name>
+                                </application>
+                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>Cluster_1C_info_{#NAME}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$.[&quot;db-server&quot;]</params>
+                                    <error_handler>DISCARD_VALUE</error_handler>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>zbx_rac.py[&quot;info&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}, &quot;-db-id&quot;, {#INFOBASE}, &quot;-db-user&quot;, {$1C_DB_USER},&quot;-db-pwd&quot;, {$1C_DB_PWD} ]</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>{#NAME}:db-user</name>
+                            <type>DEPENDENT</type>
+                            <key>db-user_[&quot;{#NAME}&quot;]</key>
+                            <delay>0</delay>
+                            <history>{$HISTORY_STORAGE}</history>
+                            <trends>0</trends>
+                            <value_type>CHAR</value_type>
+                            <applications>
+                                <application>
+                                    <name>Cluster_1C_info</name>
+                                </application>
+                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>Cluster_1C_info_{#NAME}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$.[&quot;db-user&quot;]</params>
+                                    <error_handler>DISCARD_VALUE</error_handler>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>zbx_rac.py[&quot;info&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}, &quot;-db-id&quot;, {#INFOBASE}, &quot;-db-user&quot;, {$1C_DB_USER},&quot;-db-pwd&quot;, {$1C_DB_PWD} ]</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
                             <name>{#NAME}:Отладчик</name>
                             <type>DEPENDENT</type>
                             <key>Debugger_[&quot;{#NAME}&quot;]</key>
@@ -362,6 +449,64 @@
                             </master_item>
                         </item_prototype>
                         <item_prototype>
+                            <name>{#NAME}:scheduled-jobs-deny</name>
+                            <type>DEPENDENT</type>
+                            <key>scheduled-jobs-deny_[&quot;{#NAME}&quot;]</key>
+                            <delay>0</delay>
+                            <history>{$HISTORY_STORAGE}</history>
+                            <trends>0</trends>
+                            <value_type>CHAR</value_type>
+                            <applications>
+                                <application>
+                                    <name>Cluster_1C_info</name>
+                                </application>
+                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>Cluster_1C_info_{#NAME}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$.[&quot;scheduled-jobs-deny&quot;]</params>
+                                    <error_handler>DISCARD_VALUE</error_handler>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>zbx_rac.py[&quot;info&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}, &quot;-db-id&quot;, {#INFOBASE}, &quot;-db-user&quot;, {$1C_DB_USER},&quot;-db-pwd&quot;, {$1C_DB_PWD} ]</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>{#NAME}:sessions-deny</name>
+                            <type>DEPENDENT</type>
+                            <key>sessions-deny_[&quot;{#NAME}&quot;]</key>
+                            <delay>0</delay>
+                            <history>{$HISTORY_STORAGE}</history>
+                            <trends>0</trends>
+                            <value_type>CHAR</value_type>
+                            <applications>
+                                <application>
+                                    <name>Cluster_1C_info</name>
+                                </application>
+                            </applications>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>Cluster_1C_info_{#NAME}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$.[&quot;sessions-deny&quot;]</params>
+                                    <error_handler>DISCARD_VALUE</error_handler>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>zbx_rac.py[&quot;info&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}, &quot;-db-id&quot;, {#INFOBASE}, &quot;-db-user&quot;, {$1C_DB_USER},&quot;-db-pwd&quot;, {$1C_DB_PWD} ]</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
                             <name>{#NAME}:Консоль кластера</name>
                             <type>DEPENDENT</type>
                             <key>SrvrConsole_[&quot;{#NAME}&quot;]</key>
@@ -458,6 +603,36 @@
                             </master_item>
                         </item_prototype>
                         <item_prototype>
+                            <name>{#NAME}:infobase_raw</name>
+                            <type>EXTERNAL</type>
+                            <key>zbx_rac.py[&quot;info&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}, &quot;-db-id&quot;, {#INFOBASE}, &quot;-db-user&quot;, {$1C_DB_USER},&quot;-db-pwd&quot;, {$1C_DB_PWD} ]</key>
+                            <delay>{$UPDATE_INTERVAL_RAW_INFO}</delay>
+                            <history>{$HISTORY_STORAGE_RAW}</history>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <description>raw item</description>
+                            <applications>
+                                <application>
+                                    <name>Cluster_1C_RAW</name>
+                                </application>
+                            </applications>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>{#NAME}:Количество блокировок</name>
+                            <type>EXTERNAL</type>
+                            <key>zbx_rac.py[&quot;locks&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}, &quot;-db-id&quot;, {#INFOBASE}]</key>
+                            <delay>{$UPDATE_INTERVAL_RAW}</delay>
+                            <history>{$HISTORY_STORAGE_RAW}</history>
+                            <trends>{$TREND_STORAGE}</trends>
+                            <application_prototypes>
+                                <application_prototype>
+                                    <name>Cluster_1C_{#NAME}</name>
+                                </application_prototype>
+                            </application_prototypes>
+                        </item_prototype>
+                        <item_prototype>
                             <name>session_raw_{#NAME}</name>
                             <type>EXTERNAL</type>
                             <key>zbx_rac.py[&quot;session&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}, &quot;-db-id&quot;, {#INFOBASE}]</key>
@@ -474,14 +649,15 @@
                     </item_prototypes>
                     <graph_prototypes>
                         <graph_prototype>
-                            <name>Сесcии_{#NAME}</name>
+                            <name>{#NAME}:Количество сесcии\блокировок</name>
                             <graph_items>
                                 <graph_item>
                                     <sortorder>1</sortorder>
-                                    <color>1A7C11</color>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>388E3C</color>
                                     <item>
                                         <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>COMConsole_[&quot;{#NAME}&quot;]</key>
+                                        <key>total_session_[&quot;{#NAME}&quot;]</key>
                                     </item>
                                 </graph_item>
                                 <graph_item>
@@ -489,104 +665,7 @@
                                     <color>F63100</color>
                                     <item>
                                         <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>RAS_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>3</sortorder>
-                                    <color>2774A4</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>WebClient_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>4</sortorder>
-                                    <color>A54F10</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>HTTPServiceConnection_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>5</sortorder>
-                                    <drawtype>BOLD_LINE</drawtype>
-                                    <color>FC6EA3</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>total_session_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>6</sortorder>
-                                    <color>6C59DC</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>SrvrConsole_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>7</sortorder>
-                                    <color>AC8C14</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>Designer_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>8</sortorder>
-                                    <color>611F27</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>Debugger_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>9</sortorder>
-                                    <color>F230E0</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>JobScheduler_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>10</sortorder>
-                                    <color>5CCD18</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>BackgroundJob_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>11</sortorder>
-                                    <color>BB2A02</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>SystemBackgroundJob_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>12</sortorder>
-                                    <color>5A2B57</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>hibernate_session_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>13</sortorder>
-                                    <color>89ABF8</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>1CV8_[&quot;{#NAME}&quot;]</key>
-                                    </item>
-                                </graph_item>
-                                <graph_item>
-                                    <sortorder>14</sortorder>
-                                    <color>7EC25C</color>
-                                    <item>
-                                        <host>Template 1C_RAC_FUTURE_v3</host>
-                                        <key>1CV8C_[&quot;{#NAME}&quot;]</key>
+                                        <key>zbx_rac.py[&quot;locks&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}, &quot;-db-id&quot;, {#INFOBASE}]</key>
                                     </item>
                                 </graph_item>
                             </graph_items>
@@ -606,7 +685,7 @@
                         <item_prototype>
                             <name>Process {#ID}:available-perfomance</name>
                             <type>DEPENDENT</type>
-                            <key>available-perfomance_[{#ID}]</key>
+                            <key>process_available-perfomance_[{#ID}]</key>
                             <delay>0</delay>
                             <history>{$HISTORY_STORAGE}</history>
                             <trends>{$TREND_STORAGE}</trends>
@@ -752,6 +831,29 @@
                             </master_item>
                         </item_prototype>
                         <item_prototype>
+                            <name>Process {#ID}:capacity</name>
+                            <type>DEPENDENT</type>
+                            <key>process_capacity_[{#ID}]</key>
+                            <delay>0</delay>
+                            <history>{$HISTORY_STORAGE}</history>
+                            <trends>{$TREND_STORAGE}</trends>
+                            <description>Относительная производительность процесса. Может находиться в диапазоне от 1 до 1000. Используется в процессе выбора рабочего процесса, к которому будет подсоединен очередной клиент. Клиенты распределяются между рабочими процессами пропорционально производительности рабочих процессов.</description>
+                            <applications>
+                                <application>
+                                    <name>Cluster_1C_process</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <params>$..[?(@.id == &quot;{#ID}&quot;)].[&quot;capacity&quot;].first()</params>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>zbx_rac.py[&quot;process&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}]</key>
+                            </master_item>
+                        </item_prototype>
+                        <item_prototype>
                             <name>Process {#ID}:connections</name>
                             <type>DEPENDENT</type>
                             <key>process_connection_[{#ID}]</key>
@@ -852,6 +954,53 @@
                             </master_item>
                         </item_prototype>
                     </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>Process {#ID}: AVG TIME</name>
+                            <graph_items>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Template 1C_RAC_FUTURE_v3</host>
+                                        <key>process_avg_call_time_[{#ID}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <color>F63100</color>
+                                    <item>
+                                        <host>Template 1C_RAC_FUTURE_v3</host>
+                                        <key>process_avg_db_call_time_[{#ID}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>3</sortorder>
+                                    <color>2774A4</color>
+                                    <item>
+                                        <host>Template 1C_RAC_FUTURE_v3</host>
+                                        <key>process_avg_lock_call_time_[{#ID}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>4</sortorder>
+                                    <color>A54F10</color>
+                                    <item>
+                                        <host>Template 1C_RAC_FUTURE_v3</host>
+                                        <key>process_avg_server_call_time_[{#ID}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>5</sortorder>
+                                    <color>FC6EA3</color>
+                                    <item>
+                                        <host>Template 1C_RAC_FUTURE_v3</host>
+                                        <key>process_avg_threads_[{#ID}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
                     <master_item>
                         <key>zbx_rac.py[&quot;process&quot;, &quot;-s&quot;, {$1C_RAS_HOST}, &quot;-cls-user&quot;, {$1C_CLS_USER}, &quot;-cls-pwd&quot;, {$1C_CLS_PWD}]</key>
                     </master_item>
@@ -869,6 +1018,12 @@
                 </macro>
                 <macro>
                     <macro>{$1C_CLS_USER}</macro>
+                </macro>
+                <macro>
+                    <macro>{$1C_DB_PWD}</macro>
+                </macro>
+                <macro>
+                    <macro>{$1C_DB_USER}</macro>
                 </macro>
                 <macro>
                     <macro>{$HISTORY_STORAGE}</macro>
@@ -902,7 +1057,64 @@
                     <macro>{$UPDATE_INTERVAL_RAW}</macro>
                     <value>5m</value>
                 </macro>
+                <macro>
+                    <macro>{$UPDATE_INTERVAL_RAW_INFO}</macro>
+                    <value>10m</value>
+                </macro>
             </macros>
+            <screens>
+                <screen>
+                    <name>1С</name>
+                    <hsize>1</hsize>
+                    <vsize>2</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Process {#ID}: AVG TIME</name>
+                                <host>Template 1C_RAC_FUTURE_v3</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>20</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>{#NAME}:Количество сесcии\блокировок</name>
+                                <host>Template 1C_RAC_FUTURE_v3</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+            </screens>
         </template>
     </templates>
 </zabbix_export>

@@ -3,9 +3,11 @@
 # version 0.8
 
 import argparse
-from collections import Counter
-from lib_rac import Client1C, UserDecorators
 
+from typing import Dict, List, Union, NamedTuple, Any
+from collections import Counter
+
+from lib_rac import Client1C, UserDecorators
 
 
 def discovery(args):
@@ -21,8 +23,9 @@ def session(args):
     session = server.get_session_list(args.db_id)
     result["total sessions"] = len(session)
     if result["total sessions"] > 0:
-        result["hibernate"] = Client1C.counter_session(session,
-                                            "hibernate", "yes")
+        result["hibernate"] = Client1C.counter_session(
+            session, "hibernate", "yes"
+        )
         _ = Counter([x["app-id"] for x in session])
         result.update(dict(_))
     return result
@@ -47,82 +50,173 @@ def licenses(args):
     return result
 
 
-parser = argparse.ArgumentParser(description="Скрипт для сбора"
-                                 " данных сервера 1С")
-subparsers = parser.add_subparsers(title='subcommands',
-                                   description='valid subcommands',
-                                   help='description')
-discovery_parser = subparsers.add_parser("discovery",
-                                         help="поиск баз данных Zabbix LLD")
-discovery_parser.add_argument("-s", dest="hostname",
-                              required=True,
-                              help="-s hostname | ip")
-discovery_parser.add_argument("-cls-user",
-                              dest="cls_user",
-                              default=None,
-                              help="Имя администратора кластера 1С")
-discovery_parser.add_argument("-cls-pwd",
-                              dest="cls_pwd",
-                              default=None,
-                              help="пароль администратора кластера 1С")
+@UserDecorators.to_json
+def locks(args):
+    server = Client1C(args.hostname, args.cls_user, args.cls_pwd)
+    lock = server.get_lock_list(args.db_id)
+    return len(lock)
+
+
+@UserDecorators.to_json
+def db_info(args):
+    server = Client1C(args.hostname, args.cls_user, args.cls_pwd)
+    result = server.get_db_info(args.db_id, args.db_user, args.db_pwd)
+    return result[0]
+
+
+parser = argparse.ArgumentParser(
+    description="Скрипт для сбора данных сервера 1С"
+)
+subparsers = parser.add_subparsers(
+    title="subcommands", description="valid subcommands", help="description"
+)
+discovery_parser = subparsers.add_parser(
+    "discovery", help="поиск баз данных Zabbix LLD"
+)
+discovery_parser.add_argument(
+    "-s", dest="hostname", required=True, help="-s hostname | ip"
+)
+discovery_parser.add_argument(
+    "-cls-user",
+    dest="cls_user",
+    default=None,
+    help="Имя администратора кластера 1С",
+)
+discovery_parser.add_argument(
+    "-cls-pwd",
+    dest="cls_pwd",
+    default=None,
+    help="пароль администратора кластера 1С",
+)
 discovery_parser.set_defaults(func=discovery)
 
-session_parser = subparsers.add_parser("session",
-                                       help="Отчет по сесиям для БД")
-session_parser.add_argument("-s", dest="hostname",
-                            required=True,
-                            help="-s hostname | ip")
-session_parser.add_argument("-cls-user",
-                            dest="cls_user",
-                            default=None,
-                            help="Имя администратора кластера 1С")
-session_parser.add_argument("-cls-pwd",
-                            dest="cls_pwd",
-                            default=None,
-                            help="пароль администратора кластера 1С")
-session_parser.add_argument("-db-id",
-                            dest="db_id",
-                            required=True,
-                            help="ID БД(INFOBASE)")
+session_parser = subparsers.add_parser(
+    "session", help="Отчет по сесиям для БД"
+)
+session_parser.add_argument(
+    "-s", dest="hostname", required=True, help="-s hostname | ip"
+)
+session_parser.add_argument(
+    "-cls-user",
+    dest="cls_user",
+    default=None,
+    help="Имя администратора кластера 1С",
+)
+session_parser.add_argument(
+    "-cls-pwd",
+    dest="cls_pwd",
+    default=None,
+    help="пароль администратора кластера 1С",
+)
+session_parser.add_argument(
+    "-db-id", dest="db_id", required=True, help="ID БД(INFOBASE)"
+)
 session_parser.set_defaults(func=session)
 
 
-process_parser = subparsers.add_parser("process",
-                                       help="Отчет по процессам кластера 1С")
-process_parser.add_argument("-s", dest="hostname",
-                            required=True,
-                            help="-s hostname | ip")
-process_parser.add_argument("-cls-user",
-                            dest="cls_user",
-                            default=None,
-                            help="Имя администратора кластера 1С")
-process_parser.add_argument("-cls-pwd",
-                            dest="cls_pwd",
-                            default=None,
-                            help="пароль администратора кластера 1С")
+process_parser = subparsers.add_parser(
+    "process", help="Отчет по процессам кластера 1С"
+)
+process_parser.add_argument(
+    "-s", dest="hostname", required=True, help="-s hostname | ip"
+)
+process_parser.add_argument(
+    "-cls-user",
+    dest="cls_user",
+    default=None,
+    help="Имя администратора кластера 1С",
+)
+process_parser.add_argument(
+    "-cls-pwd",
+    dest="cls_pwd",
+    default=None,
+    help="пароль администратора кластера 1С",
+)
 process_parser.set_defaults(func=process)
 
 
-session_parser = subparsers.add_parser("licenses",
-                                       help="Отчет по сесиям для БД")
-session_parser.add_argument("-s", dest="hostname",
-                            required=True,
-                            help="-s hostname | ip")
-session_parser.add_argument("-cls-user",
-                            dest="cls_user",
-                            default=None,
-                            help="Имя администратора кластера 1С")
-session_parser.add_argument("-cls-pwd",
-                            dest="cls_pwd",
-                            default=None,
-                            help="пароль администратора кластера 1С")
-session_parser.add_argument("-db-id",
-                            dest="db_id",
-                            required=True,
-                            help="ID БД(INFOBASE)")
+session_parser = subparsers.add_parser(
+    "licenses", help="Отчет по сесиям для БД"
+)
+session_parser.add_argument(
+    "-s", dest="hostname", required=True, help="-s hostname | ip"
+)
+session_parser.add_argument(
+    "-cls-user",
+    dest="cls_user",
+    default=None,
+    help="Имя администратора кластера 1С",
+)
+session_parser.add_argument(
+    "-cls-pwd",
+    dest="cls_pwd",
+    default=None,
+    help="пароль администратора кластера 1С",
+)
+session_parser.add_argument(
+    "-db-id", dest="db_id", required=True, help="ID БД(INFOBASE)"
+)
 session_parser.set_defaults(func=licenses)
 
-if __name__ == '__main__':
+
+session_parser = subparsers.add_parser(
+    "locks", help="Отчет по блокировкам для БД"
+)
+session_parser.add_argument(
+    "-s", dest="hostname", required=True, help="-s hostname | ip"
+)
+session_parser.add_argument(
+    "-cls-user",
+    dest="cls_user",
+    default=None,
+    help="Имя администратора кластера 1С",
+)
+session_parser.add_argument(
+    "-cls-pwd",
+    dest="cls_pwd",
+    default=None,
+    help="пароль администратора кластера 1С",
+)
+session_parser.add_argument(
+    "-db-id", dest="db_id", required=True, help="ID БД(INFOBASE)"
+)
+session_parser.set_defaults(func=locks)
+
+
+session_parser = subparsers.add_parser("info", help="Информация о базе 1С")
+session_parser.add_argument(
+    "-s", dest="hostname", required=True, help="-s hostname | ip"
+)
+session_parser.add_argument(
+    "-cls-user",
+    dest="cls_user",
+    default=None,
+    help="Имя администратора кластера 1С",
+)
+session_parser.add_argument(
+    "-cls-pwd",
+    dest="cls_pwd",
+    default=None,
+    help="пароль администратора кластера 1С",
+)
+session_parser.add_argument(
+    "-db-id", dest="db_id", required=True, help="ID БД(INFOBASE)"
+)
+session_parser.add_argument(
+    "-db-user",
+    dest="db_user",
+    required=True,
+    help="Имя администратора базы 1С",
+)
+session_parser.add_argument(
+    "-db-pwd",
+    dest="db_pwd",
+    required=True,
+    help="Пароль администратора базы 1С",
+)
+session_parser.set_defaults(func=db_info)
+
+if __name__ == "__main__":
     args = parser.parse_args()
     if not vars(args):
         parser.print_usage()
