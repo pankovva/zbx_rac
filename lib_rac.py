@@ -3,14 +3,9 @@ import logging, json, subprocess
 from typing import Dict, List, Union, Callable, TypeVar, Any
 
 
-logger = logging.getLogger("lib_1c_rac")
-logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-formatter = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
+
 
 ListRac = List[Dict[str, str]]
 

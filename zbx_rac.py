@@ -23,9 +23,7 @@ def session(args):
     session = server.get_session_list(args.db_id)
     result["total sessions"] = len(session)
     if result["total sessions"] > 0:
-        result["hibernate"] = Client1C.counter_session(
-            session, "hibernate", "yes"
-        )
+        result["hibernate"] = Client1C.counter_session(session, "hibernate", "yes")
         _ = Counter([x["app-id"] for x in session])
         result.update(dict(_))
     return result
@@ -64,9 +62,7 @@ def db_info(args):
     return result[0]
 
 
-parser = argparse.ArgumentParser(
-    description="Скрипт для сбора данных сервера 1С"
-)
+parser = argparse.ArgumentParser(description="Скрипт для сбора данных сервера 1С")
 subparsers = parser.add_subparsers(
     title="subcommands", description="valid subcommands", help="description"
 )
@@ -90,9 +86,7 @@ discovery_parser.add_argument(
 )
 discovery_parser.set_defaults(func=discovery)
 
-session_parser = subparsers.add_parser(
-    "session", help="Отчет по сесиям для БД"
-)
+session_parser = subparsers.add_parser("session", help="Отчет по сесиям для БД")
 session_parser.add_argument(
     "-s", dest="hostname", required=True, help="-s hostname | ip"
 )
@@ -114,9 +108,7 @@ session_parser.add_argument(
 session_parser.set_defaults(func=session)
 
 
-process_parser = subparsers.add_parser(
-    "process", help="Отчет по процессам кластера 1С"
-)
+process_parser = subparsers.add_parser("process", help="Отчет по процессам кластера 1С")
 process_parser.add_argument(
     "-s", dest="hostname", required=True, help="-s hostname | ip"
 )
@@ -135,9 +127,7 @@ process_parser.add_argument(
 process_parser.set_defaults(func=process)
 
 
-session_parser = subparsers.add_parser(
-    "licenses", help="Отчет по сесиям для БД"
-)
+session_parser = subparsers.add_parser("licenses", help="Отчет по сесиям для БД")
 session_parser.add_argument(
     "-s", dest="hostname", required=True, help="-s hostname | ip"
 )
@@ -159,9 +149,7 @@ session_parser.add_argument(
 session_parser.set_defaults(func=licenses)
 
 
-session_parser = subparsers.add_parser(
-    "locks", help="Отчет по блокировкам для БД"
-)
+session_parser = subparsers.add_parser("locks", help="Отчет по блокировкам для БД")
 session_parser.add_argument(
     "-s", dest="hostname", required=True, help="-s hostname | ip"
 )
